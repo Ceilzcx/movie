@@ -1,4 +1,4 @@
-package com.example.movie.ui.movie;
+package com.example.movie.ui.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.movie.R;
 
-public class HomeFragment extends Fragment{
-
-    @Nullable
-    @Override
+public class UserFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_movie, container, false);
-
+        View root = inflater.inflate(R.layout.fragment_user, container, false);
 
         return root;
     }

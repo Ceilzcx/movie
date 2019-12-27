@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -73,3 +74,37 @@ class MovieClassifyAdapter extends RecyclerView.Adapter<MovieClassifyAdapter.Cla
 
 }
 
+class MovieContentAdapter extends RecyclerView.Adapter<>{
+    private List<>
+
+    @NonNull
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 0;
+    }
+
+    static class ContentHolder extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView text_name;
+        TextView text_rate;
+
+
+        public ContentHolder(@NonNull View view) {
+            super(view);
+            image = view.findViewById(R.id.movie_image);
+            text_name = view.findViewById(R.id.movie_name);
+            text_rate = view.findViewById(R.id.movie_rate);
+        }
+    }
+
+}

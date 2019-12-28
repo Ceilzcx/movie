@@ -14,5 +14,7 @@
     <color name="colorLightYellow">#F5DEB3</color>
     <color name="colorBlue">#9200C4FF</color>
     <color name="colorWeakBlue">#F2B0F0F5</color>
+    <color name="colorDeepBlue">#008dea</color>
+
 </resources>
 

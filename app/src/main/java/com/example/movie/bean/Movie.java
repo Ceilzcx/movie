@@ -1,4 +1,4 @@
-package com.example.movie.ui.bean;
+package com.example.movie.bean;
 
 public class Movie {
     private int movieId;

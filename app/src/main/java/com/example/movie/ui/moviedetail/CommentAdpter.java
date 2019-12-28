@@ -52,7 +52,7 @@ class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CommentViewHolder mholder = (CommentViewHolder) holder;
         mholder.name.setText(comment.getUsername());
         mholder.data.setText(comment.get_date());
-        mholder.score.setText(comment.getRating());
+        mholder.score.setText(comment.getRating()/10+".0");
         mholder.content.setText(comment.getContent());
     }
 

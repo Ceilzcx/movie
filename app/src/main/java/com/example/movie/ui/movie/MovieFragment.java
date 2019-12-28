@@ -19,6 +19,7 @@ import com.example.movie.R;
 import com.example.movie.bean.Movie;
 import com.example.movie.controller.MovieController;
 import com.example.movie.ui.MyImageView;
+import com.example.movie.ui.moviedetail.MovieDetail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,7 +48,7 @@ public class MovieFragment extends Fragment{
         RecyclerView movie_content_view = root.findViewById(R.id.recycle_movie_content);
         contentAdapter = new MovieContentAdapter(movies);
         contentAdapter.OnRecycleItemClickListener(position -> {
-            Intent intent = new Intent();
+            Intent intent = new Intent(getContext(), MovieDetail.class);
             intent.putExtra("movieId", movies.get(position).getMovieId());
             startActivity(intent);
         });

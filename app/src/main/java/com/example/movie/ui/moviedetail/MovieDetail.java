@@ -20,7 +20,7 @@ import com.example.movie.ui.MyImageView;
 
 import java.util.List;
 
-public class moviedetail extends AppCompatActivity {
+public class MovieDetail extends AppCompatActivity {
     Movie movie;
     MyImageView movieDetailImage;
     TextView movieDetailTitle,movieDetailGenre,movieDetailId,movieDetailRate;
@@ -49,18 +49,8 @@ public class moviedetail extends AppCompatActivity {
 
             }
         });
-        Thread thread=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                movie=new MovieController().getMovieById(movieId);
-            }
-        });
-        Thread thread2=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                comments=new CommentController().getCommentById(movieId);
-            }
-        });
+        Thread thread=new Thread(() -> movie=new MovieController().getMovieById(movieId));
+        Thread thread2=new Thread(() -> comments=new CommentController().getCommentById(movieId));
         thread.start();
         thread2.start();
         try{
@@ -70,9 +60,9 @@ public class moviedetail extends AppCompatActivity {
             e.printStackTrace();
         }
         movieDetailTitle.setText(movie.getTitle());
-        movieDetailId.setText(movie.getMovieId());
+        movieDetailId.setText("movieId:0"+movie.getMovieId());
         movieDetailGenre.setText(movie.getGenres());
-        movieDetailRate.setText(movie.getRate()/10+".0");
+        movieDetailRate.setText(movie.getRate()+"");
         movieDetailImage.setImageURL(movie.getImage());
         CommentAdapter commentAdapter=new CommentAdapter(this,comments);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

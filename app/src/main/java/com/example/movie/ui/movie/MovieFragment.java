@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movie.R;
-import com.example.movie.ui.bean.Movie;
+import com.example.movie.bean.Movie;
 
 import java.util.Arrays;
 import java.util.List;

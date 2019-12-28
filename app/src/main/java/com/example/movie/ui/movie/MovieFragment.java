@@ -1,5 +1,6 @@
 package com.example.movie.ui.movie;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,34 +17,71 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.movie.R;
 import com.example.movie.bean.Movie;
+import com.example.movie.controller.MovieController;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MovieFragment extends Fragment{
     private List<String> genres = Arrays.asList("科幻", "剧情", "爱情", "战争", "动画", "喜剧");
+    private List<Movie> movies;
+    private MovieController controller;
+    private MovieContentAdapter contentAdapter;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_movie, container, false);
-        RecyclerView movie_classify_view = root.findViewById(R.id.recycle_movie_classify);
-        RecyclerView movie_content_view = root.findViewById(R.id.recycle_movie_content);
 
+        RecyclerView movie_classify_view = root.findViewById(R.id.recycle_movie_classify);
         MovieGenreAdapter genreAdapter = new MovieGenreAdapter(genres);
         LinearLayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
+        genreAdapter.OnRecycleItemClickListener(position -> getMovies(genres.get(position)));
         movie_classify_view.setLayoutManager(manager1);
         movie_classify_view.setAdapter(genreAdapter);
 
+        movies = new ArrayList<>();
+        getMovies("科幻");
+        RecyclerView movie_content_view = root.findViewById(R.id.recycle_movie_content);
+        contentAdapter = new MovieContentAdapter(movies);
+        contentAdapter.OnRecycleItemClickListener(position -> {
+            Intent intent = new Intent();
+            intent.putExtra("movieId", movies.get(position).getMovieId());
+            startActivity(intent);
+        });
+        LinearLayoutManager manager2 = new LinearLayoutManager(getContext());
+        movie_content_view.setLayoutManager(manager2);
+        movie_content_view.setAdapter(contentAdapter);
+
         return root;
     }
+
+    private void getMovies(String genre){
+        movies.clear();
+        new Thread(() ->{
+            controller = new MovieController();
+            movies.addAll(controller.getMoviesByGenre(genre));
+            contentAdapter.notifyDataSetChanged();
+        }).start();
+    }
+
 }
 
 class MovieGenreAdapter extends RecyclerView.Adapter<MovieGenreAdapter.GenreHolder>{
     private List<String> classifies;
+    private OnRecycleItemClickListener listener = null;
 
-    public MovieGenreAdapter(List<String> classifies){
+    MovieGenreAdapter(List<String> classifies){
         this.classifies = classifies;
+    }
+
+    public void OnRecycleItemClickListener(OnRecycleItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnRecycleItemClickListener {
+        void OnRecycleItemClickListener(int position);
     }
 
     @NonNull
@@ -56,6 +94,9 @@ class MovieGenreAdapter extends RecyclerView.Adapter<MovieGenreAdapter.GenreHold
     @Override
     public void onBindViewHolder(@NonNull GenreHolder holder, int position) {
         holder.textView.setText(classifies.get(position));
+        holder.textView.setOnClickListener(v -> {
+            listener.OnRecycleItemClickListener(position);
+        });
     }
 
     @Override
@@ -81,6 +122,16 @@ class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.Conte
         this.movies = movies;
     }
 
+    private MovieGenreAdapter.OnRecycleItemClickListener listener = null;
+
+    public void OnRecycleItemClickListener(MovieGenreAdapter.OnRecycleItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnRecycleItemClickListener {
+        void OnRecycleItemClickListener(int position);
+    }
+
     @NonNull
     @Override
     public ContentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -94,6 +145,7 @@ class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.Conte
         holder.image.setImageBitmap(BitmapFactory.decodeFile(movie.getImage()));
         holder.text_title.setText(movie.getTitle());
         holder.text_rate.setText(""+movie.getRate());
+        holder.image.setOnClickListener(v -> listener.OnRecycleItemClickListener(position));
     }
 
     @Override

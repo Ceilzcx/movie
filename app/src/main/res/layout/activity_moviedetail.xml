@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
-    <ImageView
+    <com.example.movie.ui.MyImageView
         android:id="@+id/movie_detail_image"
         android:layout_width="110dp"
         android:layout_height="150dp"
@@ -129,7 +129,7 @@
         android:textColor="@color/colorBlack"
         app:layout_constraintLeft_toLeftOf="@id/movie_detail_textrate"
         app:layout_constraintTop_toBottomOf="@id/movie_detail_editrate"
-
+        android:layout_marginTop="10dp"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/movie_detail_recycleview"

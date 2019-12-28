@@ -23,6 +23,8 @@
             android:background="@drawable/round_editstyle"
             android:drawableStart="@drawable/ic_search"
             android:hint="请输入电影"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:padding="5dp"
             android:textColor="@color/colorWhite" />
 

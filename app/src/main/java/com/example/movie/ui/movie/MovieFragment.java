@@ -1,7 +1,6 @@
 package com.example.movie.ui.movie;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,9 +37,9 @@ public class MovieFragment extends Fragment{
 
         RecyclerView movie_classify_view = root.findViewById(R.id.recycle_movie_classify);
         MovieGenreAdapter genreAdapter = new MovieGenreAdapter(genres);
-        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
         genreAdapter.OnRecycleItemClickListener(position -> getMovies(genres.get(position)));
-        movie_classify_view.setLayoutManager(manager1);
+        movie_classify_view.setLayoutManager(manager);
         movie_classify_view.setAdapter(genreAdapter);
 
         movies = new ArrayList<>();
@@ -52,8 +51,6 @@ public class MovieFragment extends Fragment{
             intent.putExtra("movieId", movies.get(position).getMovieId());
             startActivity(intent);
         });
-        LinearLayoutManager manager2 = new LinearLayoutManager(getContext());
-        movie_content_view.setLayoutManager(manager2);
         movie_content_view.setAdapter(contentAdapter);
 
         return root;

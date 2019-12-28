@@ -2,6 +2,8 @@ package com.example.movie.ui.movie;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ public class MovieFragment extends Fragment{
     private List<Movie> movies;
     private MovieController controller;
     private MovieContentAdapter contentAdapter;
+    private MyHandler handler;
 
     @Nullable
     @Override
@@ -42,8 +45,9 @@ public class MovieFragment extends Fragment{
         movie_classify_view.setLayoutManager(manager);
         movie_classify_view.setAdapter(genreAdapter);
 
+        handler = new MyHandler();
+
         movies = new ArrayList<>();
-        getMovies("科幻");
         RecyclerView movie_content_view = root.findViewById(R.id.recycle_movie_content);
         contentAdapter = new MovieContentAdapter(movies);
         contentAdapter.OnRecycleItemClickListener(position -> {
@@ -51,7 +55,9 @@ public class MovieFragment extends Fragment{
             intent.putExtra("movieId", movies.get(position).getMovieId());
             startActivity(intent);
         });
+
         movie_content_view.setAdapter(contentAdapter);
+        getMovies("科幻");
 
         return root;
     }
@@ -61,10 +67,20 @@ public class MovieFragment extends Fragment{
         new Thread(() ->{
             controller = new MovieController();
             List<Movie> result = controller.getMoviesByGenre(genre);
-            Log.e("电影", result.size()+"");
             movies.addAll(result);
-            //contentAda pter.notifyDataSetChanged();
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
         }).start();
+    }
+
+    private class MyHandler extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 1){
+                contentAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
 }
@@ -145,6 +161,7 @@ class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.Conte
         holder.image.setImageURL(movie.getImage());
         holder.text_title.setText(movie.getTitle());
         holder.text_rate.setText(""+movie.getRate());
+        Log.e("电影标题", movie.getTitle());
         holder.image.setOnClickListener(v -> listener.OnRecycleItemClickListener(position));
     }
 

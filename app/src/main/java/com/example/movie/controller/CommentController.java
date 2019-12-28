@@ -9,7 +9,7 @@ import java.util.List;
 public class CommentController {
 
     public List<Comment> getCommentById(int movieId) {
-        String path="http://ylnzk.cn:8080/douban/comment/getComments?movieId="+movieId;
+        String path="http://ylnzk.cn:8010/douban/comment/getComments?movieId="+movieId;
         String result= HttpUtil.getHttpInterface(path);
         return JSON.parseArray(result, Comment.class);
     }

@@ -3,10 +3,10 @@ package com.example.movie.ui.movie;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.movie.R;
 import com.example.movie.bean.Movie;
 import com.example.movie.controller.MovieController;
+import com.example.movie.ui.MyImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -61,8 +62,10 @@ public class MovieFragment extends Fragment{
         movies.clear();
         new Thread(() ->{
             controller = new MovieController();
-            movies.addAll(controller.getMoviesByGenre(genre));
-            contentAdapter.notifyDataSetChanged();
+            List<Movie> result = controller.getMoviesByGenre(genre);
+            Log.e("电影", result.size()+"");
+            movies.addAll(result);
+            //contentAda pter.notifyDataSetChanged();
         }).start();
     }
 
@@ -87,7 +90,7 @@ class MovieGenreAdapter extends RecyclerView.Adapter<MovieGenreAdapter.GenreHold
     @NonNull
     @Override
     public MovieGenreAdapter.GenreHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_genre, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_genre, parent, false);
         return new GenreHolder(view);
     }
 
@@ -117,12 +120,11 @@ class MovieGenreAdapter extends RecyclerView.Adapter<MovieGenreAdapter.GenreHold
 
 class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.ContentHolder>{
     private List<Movie> movies;
+    private MovieGenreAdapter.OnRecycleItemClickListener listener = null;
 
     MovieContentAdapter(List<Movie> movies){
         this.movies = movies;
     }
-
-    private MovieGenreAdapter.OnRecycleItemClickListener listener = null;
 
     public void OnRecycleItemClickListener(MovieGenreAdapter.OnRecycleItemClickListener listener) {
         this.listener = listener;
@@ -135,14 +137,14 @@ class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.Conte
     @NonNull
     @Override
     public ContentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_movie_content, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_movie_content, parent, false);
         return new ContentHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContentHolder holder, int position) {
         Movie movie = movies.get(position);
-        holder.image.setImageBitmap(BitmapFactory.decodeFile(movie.getImage()));
+        holder.image.setImageURL(movie.getImage());
         holder.text_title.setText(movie.getTitle());
         holder.text_rate.setText(""+movie.getRate());
         holder.image.setOnClickListener(v -> listener.OnRecycleItemClickListener(position));
@@ -154,7 +156,7 @@ class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapter.Conte
     }
 
     static class ContentHolder extends RecyclerView.ViewHolder{
-        private ImageView image;
+        private MyImageView image;
         private TextView text_title;
         private TextView text_rate;
 

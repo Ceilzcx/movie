@@ -9,14 +9,14 @@ import java.util.List;
 public class MovieController{
 
     public Movie getMovieById(int movieId) {
-        String path="http://ylnzk.cn:8080/douban/movie/getMovie?movieId="+movieId;
+        String path="http://ylnzk.cn:8010/douban/movie/getMovie?movieId="+movieId;
         String result= HttpUtil.getHttpInterface(path);
         return JSON.parseObject(result, Movie.class);
     }
 
     public List<Movie> getMoviesByGenre(String genre) {
-        String path="http://ylnzk.cn:8080/douban/movie/getMovies?genre="+genre;
+        String path="http://ylnzk.cn:8010/douban/movie/getMovies?genre="+genre;
         String result= HttpUtil.getHttpInterface(path);
-        return JSON.parseArray(result,Movie.class);
+        return JSON.parseArray(result, Movie.class);
     }
 }

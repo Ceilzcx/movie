@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorLightYellow"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     tools:context=".ui.LoginActivity">
 
@@ -81,7 +81,7 @@
         android:layout_width="365dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:background="@color/colorOrange"
+        android:background="@color/colorDeepBlue"
         android:text="登录"
         android:textColor="@color/colorWhite"
         android:textSize="20sp"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="=￣ω￣="
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/colorDeepBlue"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

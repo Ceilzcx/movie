@@ -151,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="看过该电影的用户还看过"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:textColor="@color/colorBlack"
         app:layout_constraintTop_toBottomOf="@id/commendRecycelview"
         app:layout_constraintLeft_toLeftOf="@id/movie_detail_image"

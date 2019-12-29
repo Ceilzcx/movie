@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity{
             case R.id.bt_login:
                 try {
                     int userId = Integer.parseInt(edtUser.getText().toString());
-//                    loging(userId, edtPasswd.getText().toString());
+
                 } catch (NumberFormatException e) {
                     new AlertDialog.Builder(LoginActivity.this).setTitle("提示")
                             .setMessage("账号输入错误(•_•)")

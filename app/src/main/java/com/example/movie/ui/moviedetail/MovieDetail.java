@@ -25,7 +25,7 @@ public class MovieDetail extends AppCompatActivity {
     MyImageView movieDetailImage;
     TextView movieDetailTitle,movieDetailGenre,movieDetailId,movieDetailRate;
     List<Comment> comments;
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,commendRecyclerView,alsolikeRecyclerView;
     Button button;
     EditText editText;
     @Override
@@ -42,6 +42,8 @@ public class MovieDetail extends AppCompatActivity {
         movieDetailRate=findViewById(R.id.shop_score);
         recyclerView=findViewById(R.id.movie_detail_recycleview);
         editText=findViewById(R.id.movie_detail_editrate);
+        commendRecyclerView=findViewById(R.id.commendRecycelview);
+        alsolikeRecyclerView=findViewById(R.id.alsolookRecycelview);
         button=findViewById(R.id.movie_detail_confirm);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

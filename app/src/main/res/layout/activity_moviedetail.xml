@@ -86,7 +86,7 @@
         android:id="@+id/movie_detail_textrate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/movie_detail_image"
+        app:layout_constraintTop_toBottomOf="@id/alsolookRecycelview"
         app:layout_constraintLeft_toLeftOf="@id/movie_detail_image"
         android:textSize="16dp"
         android:textColor="@color/colorBlack"
@@ -107,7 +107,7 @@
          android:background="@drawable/edt_commit_remark"
          android:gravity="top"
          android:textSize="16dp"
-         android:text="hahahhahaha"
+         android:text=""
          />
     <Button
         android:id="@+id/movie_detail_confirm"
@@ -121,6 +121,50 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        />
+
+    <TextView
+        android:id="@+id/commend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:text="相似电影推荐"
+        android:textSize="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/movie_detail_textrate"
+        app:layout_constraintTop_toBottomOf="@id/movie_detail_image"
+        android:layout_marginTop="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/commendRecycelview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/commend"
+        app:layout_constraintLeft_toLeftOf="@id/commend"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/alsolook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="看过该电影的用户还看过"
+        android:textSize="16dp"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintTop_toBottomOf="@id/commendRecycelview"
+        app:layout_constraintLeft_toLeftOf="@id/movie_detail_image"
+        android:layout_marginTop="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/alsolookRecycelview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/alsolook"
+        android:layout_margin="10dp"
+
         />
     <TextView
         android:id="@+id/movie_detail_allrate"

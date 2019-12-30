@@ -42,4 +42,10 @@ public class MovieController {
         return JSON.parseArray(result, Movie.class);
     }
 
+    public List<Movie> getMovieByUser(int userId){
+        String path = "http://ylnzk.cn:8010/douban/movie/getMovieByUser?userId="+userId;
+        String result = HttpUtil.getHttpInterface(path);
+        return JSON.parseArray(result, Movie.class);
+    }
+
 }

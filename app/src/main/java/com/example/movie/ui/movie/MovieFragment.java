@@ -25,7 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MovieFragment extends Fragment{
-    private List<String> genres = Arrays.asList("科幻", "剧情", "爱情", "战争", "动画", "喜剧");
+    private List<String> genres = Arrays.asList("喜剧", "科幻", "历史", "恐怖", "古装", "灾难", "音乐","剧情","犯罪","动画",
+            "爱情","传记","家庭","冒险","战争","动作","奇幻");
     private List<Movie> movies;
     private MovieController controller;
     private MovieContentAdapter contentAdapter;
@@ -38,7 +39,7 @@ public class MovieFragment extends Fragment{
 
         RecyclerView movie_classify_view = root.findViewById(R.id.recycle_movie_classify);
         MovieGenreAdapter genreAdapter = new MovieGenreAdapter(genres);
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, true);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         genreAdapter.OnRecycleItemClickListener(position -> getMovies(genres.get(position)));
         movie_classify_view.setLayoutManager(manager);
         movie_classify_view.setAdapter(genreAdapter);
@@ -55,7 +56,7 @@ public class MovieFragment extends Fragment{
         });
 
         movie_content_view.setAdapter(contentAdapter);
-        getMovies("科幻");
+        getMovies("喜剧");
 
         return root;
     }

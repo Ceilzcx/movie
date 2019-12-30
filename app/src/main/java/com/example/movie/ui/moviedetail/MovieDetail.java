@@ -115,12 +115,12 @@ public class MovieDetail extends AppCompatActivity {
 
 
         adapter1 = new MovieContentAdapter(commendMovies);
-        LinearLayoutManager manager1 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);
+        LinearLayoutManager manager1 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         commendRecyclerView.setLayoutManager(manager1);
         commendRecyclerView.setAdapter(adapter1);
 
         adapter2 = new MovieContentAdapter(alsoLikeMovies);
-        LinearLayoutManager manager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);
+        LinearLayoutManager manager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         alsolikeRecyclerView.setLayoutManager(manager2);
         alsolikeRecyclerView.setAdapter(adapter2);
 

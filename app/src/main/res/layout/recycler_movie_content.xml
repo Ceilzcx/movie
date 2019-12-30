@@ -4,7 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginStart="35dp">
 
     <com.example.movie.ui.MyImageView
         android:id="@+id/movie_image"

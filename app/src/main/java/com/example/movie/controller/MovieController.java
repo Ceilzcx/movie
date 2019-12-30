@@ -30,7 +30,7 @@ public class MovieController {
     }
 
     public List<Movie> getAlsolikeMovie(int movieId){
-        String path = "http://192.168.1.4:5000/other_movie??movieId="+movieId;
+        String path = "http://192.168.1.4:5000/other_movie?movieId="+movieId;
         String result = HttpUtil.getHttpInterface(path);
         return JSON.parseArray(result, Movie.class);
     }

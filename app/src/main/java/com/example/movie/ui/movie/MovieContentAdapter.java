@@ -57,7 +57,7 @@ public class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapte
         private TextView text_rate;
 
 
-        public ContentHolder(@NonNull View view) {
+        ContentHolder(@NonNull View view) {
             super(view);
             image = view.findViewById(R.id.movie_image);
             text_title = view.findViewById(R.id.movie_title);

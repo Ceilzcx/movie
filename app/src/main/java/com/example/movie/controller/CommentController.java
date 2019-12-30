@@ -15,7 +15,7 @@ public class CommentController {
     }
 
     public String judgeComment(String content){
-        String path = "http://192.168.1.4:5000/comment?comment=好看";
+        String path = "http://192.168.1.4:5000/comment?comment="+content;
         return HttpUtil.getHttpInterface(path);
     }
 

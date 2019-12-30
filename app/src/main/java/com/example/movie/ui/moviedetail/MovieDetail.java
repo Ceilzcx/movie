@@ -1,11 +1,15 @@
 package com.example.movie.ui.moviedetail;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +38,12 @@ public class MovieDetail extends AppCompatActivity {
     List<Movie> commendMovies;
     List<Movie> alsoLikeMovies;
 
+    private MovieContentAdapter adapter1;
+    private MovieContentAdapter adapter2;
+    private Handler handler;
+
+    private String result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +62,17 @@ public class MovieDetail extends AppCompatActivity {
         alsolikeRecyclerView = findViewById(R.id.alsolookRecycelview);
         button = findViewById(R.id.movie_detail_confirm);
         button.setOnClickListener(v -> {
-
+            new Thread(() ->{
+                CommentController commentController = new CommentController();
+                result = commentController.judgeComment(editText.getText().toString());
+                if (result.equals("1"))
+                    result = "好评";
+                else
+                    result = "差评";
+                Message message = new Message();
+                message.what = 3;
+                handler.sendMessage(message);
+            }).start();
         });
         Thread thread = new Thread(() -> movie = new MovieController().getMovieById(movieId));
         Thread thread2 = new Thread(() -> comments = new CommentController().getCommentById(movieId));
@@ -73,28 +93,52 @@ public class MovieDetail extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(commentAdapter);
 
+        commendMovies = new ArrayList<>();
+        alsoLikeMovies = new ArrayList<>();
+
         //改成调用接口
         MovieController controller = new MovieController();
-        Thread thread3 = new Thread(() -> commendMovies = controller.getCommedMovie(movieId));
-        Thread thread4 = new Thread(() -> alsoLikeMovies = controller.getAlsolikeMovie(movieId));
-        thread3.start();
-        thread4.start();
-        try {
-            thread3.join();
-            thread4.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> {
+            commendMovies.addAll(controller.getCommendMovie(movieId));
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessage(message);
+        }).start();
+        new Thread(() -> {
+            alsoLikeMovies.addAll(controller.getAlsolikeMovie(movieId));
+            Message message = new Message();
+            message.what = 2;
+            handler.sendMessage(message);
+        }).start();
 
-        MovieContentAdapter adapter1 = new MovieContentAdapter(commendMovies);
+        handler = new MyHandler();
+
+
+        adapter1 = new MovieContentAdapter(commendMovies);
         LinearLayoutManager manager1 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);
         commendRecyclerView.setLayoutManager(manager1);
         commendRecyclerView.setAdapter(adapter1);
 
-        MovieContentAdapter adapter2 = new MovieContentAdapter(alsoLikeMovies);
+        adapter2 = new MovieContentAdapter(alsoLikeMovies);
         LinearLayoutManager manager2 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);
         alsolikeRecyclerView.setLayoutManager(manager2);
         alsolikeRecyclerView.setAdapter(adapter2);
 
     }
+
+    private class MyHandler extends Handler{
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 1){
+                adapter1.notifyDataSetChanged();
+            }else if (msg.what == 2){
+                adapter2.notifyDataSetChanged();
+            }else if (msg.what == 3){
+                new AlertDialog.Builder(MovieDetail.this).setTitle("提示")
+                        .setMessage("判断结果为"+result)
+                        .setPositiveButton("确定", null).show();
+            }
+        }
+    }
+
 }

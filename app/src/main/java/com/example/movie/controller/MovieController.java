@@ -22,7 +22,7 @@ public class MovieController {
         return JSON.parseArray(result, Movie.class);
     }
 
-    public List<Movie> getCommedMovie(int movieId) {
+    public List<Movie> getCommendMovie(int movieId) {
         String path = "http://192.168.1.4:5000/same_type_movie?movieId="+movieId;
         String result = HttpUtil.getHttpInterface(path);
         Log.e("get", result);
@@ -32,6 +32,7 @@ public class MovieController {
     public List<Movie> getAlsolikeMovie(int movieId){
         String path = "http://192.168.1.4:5000/other_movie?movieId="+movieId;
         String result = HttpUtil.getHttpInterface(path);
+        Log.e("get", result);
         return JSON.parseArray(result, Movie.class);
     }
 

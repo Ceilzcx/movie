@@ -14,4 +14,9 @@ public class CommentController {
         return JSON.parseArray(result, Comment.class);
     }
 
+    public String judgeComment(String content){
+        String path = "http://192.168.1.4:5000/comment?comment=好看";
+        return HttpUtil.getHttpInterface(path);
+    }
+
 }

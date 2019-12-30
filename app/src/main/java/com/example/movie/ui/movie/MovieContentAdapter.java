@@ -1,6 +1,5 @@
 package com.example.movie.ui.movie;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class MovieContentAdapter extends RecyclerView.Adapter<MovieContentAdapte
         holder.image.setImageURL(movie.getImage());
         holder.text_title.setText(movie.getTitle());
         holder.text_rate.setText(""+movie.getRate());
-        Log.e("电影标题", movie.getTitle());
         holder.image.setOnClickListener(v -> listener.OnRecycleItemClickListener(position));
     }
 

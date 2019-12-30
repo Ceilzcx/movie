@@ -74,8 +74,17 @@ public class MovieDetail extends AppCompatActivity {
         recyclerView.setAdapter(commentAdapter);
 
         //改成调用接口
-        commendMovies = new ArrayList<>();
-        alsoLikeMovies = new ArrayList<>();
+        MovieController controller = new MovieController();
+        Thread thread3 = new Thread(() -> commendMovies = controller.getCommedMovie(movieId));
+        Thread thread4 = new Thread(() -> alsoLikeMovies = controller.getAlsolikeMovie(movieId));
+        thread3.start();
+        thread4.start();
+        try {
+            thread3.join();
+            thread4.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         MovieContentAdapter adapter1 = new MovieContentAdapter(commendMovies);
         LinearLayoutManager manager1 = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true);

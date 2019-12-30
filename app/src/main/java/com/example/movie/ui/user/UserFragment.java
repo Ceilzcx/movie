@@ -1,6 +1,7 @@
 package com.example.movie.ui.user;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -17,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.movie.R;
+import com.example.movie.ui.LoginActivity;
 
 import java.util.Objects;
 
@@ -50,6 +53,12 @@ public class UserFragment extends Fragment{
             else
                 button2.setSelected(true);
         }
+
+        ImageView imageView = root.findViewById(R.id.image_mine_account);
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        });
 
         return root;
     }

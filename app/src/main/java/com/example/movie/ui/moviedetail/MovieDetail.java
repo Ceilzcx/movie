@@ -99,16 +99,30 @@ public class MovieDetail extends AppCompatActivity {
         //改成调用接口
         MovieController controller = new MovieController();
         new Thread(() -> {
-            commendMovies.addAll(controller.getCommendMovie(movieId));
-            Message message = new Message();
-            message.what = 1;
-            handler.sendMessage(message);
+            List<Movie> movies = controller.getCommendMovie(movieId);
+            if (movies != null) {
+                commendMovies.addAll(movies);
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }else {
+                Message message = new Message();
+                message.what = 4;
+                handler.sendMessage(message);
+            }
         }).start();
         new Thread(() -> {
-            alsoLikeMovies.addAll(controller.getAlsolikeMovie(movieId));
-            Message message = new Message();
-            message.what = 2;
-            handler.sendMessage(message);
+            List<Movie> movies = controller.getCommendMovie(movieId);
+            if (movies != null) {
+                alsoLikeMovies.addAll(controller.getAlsolikeMovie(movieId));
+                Message message = new Message();
+                message.what = 2;
+                handler.sendMessage(message);
+            }else {
+                Message message = new Message();
+                message.what = 4;
+                handler.sendMessage(message);
+            }
         }).start();
 
         handler = new MyHandler();
@@ -136,6 +150,10 @@ public class MovieDetail extends AppCompatActivity {
             }else if (msg.what == 3){
                 new AlertDialog.Builder(MovieDetail.this).setTitle("提示")
                         .setMessage("判断结果为"+result)
+                        .setPositiveButton("确定", null).show();
+            }else if (msg.what == 4){
+                new AlertDialog.Builder(MovieDetail.this).setTitle("提示")
+                        .setMessage("服务器连接错误,请检查您的网络")
                         .setPositiveButton("确定", null).show();
             }
         }

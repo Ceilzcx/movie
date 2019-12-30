@@ -1,6 +1,7 @@
 package com.example.movie.ui.prediction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.example.movie.R;
 import com.example.movie.bean.Movie;
 import com.example.movie.controller.MovieController;
 import com.example.movie.ui.movie.MovieContentAdapter;
+import com.example.movie.ui.moviedetail.MovieDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +43,15 @@ public class PredictionFragment extends Fragment {
 
         TextView textNone = root.findViewById(R.id.text_none);
 
+        myMovies = new ArrayList<>();
+        recommendMovies = new ArrayList<>();
+
         RecyclerView myMovieView = root.findViewById(R.id.recycle_my_movie);
-        Thread thread = new Thread(() -> myMovies = controller.getMovieByUser(pref.getInt("userId", 0)));
+        Thread thread = new Thread(() -> {
+            List<Movie> movies = controller.getMovieByUser(pref.getInt("userId", 0));
+            if (movies != null)
+                myMovies.addAll(movies);
+        });
         thread.start();
         try {
             thread.join();
@@ -77,6 +86,18 @@ public class PredictionFragment extends Fragment {
         recommendView.setAdapter(recommedAdapter);
 
         handler = new MyHandler();
+
+        recommedAdapter.OnRecycleItemClickListener(position -> {
+            Intent intent = new Intent(getContext(), MovieDetail.class);
+            intent.putExtra("movieId", recommendMovies.get(position).getMovieId());
+            startActivity(intent);
+        });
+
+        myAdapter.OnRecycleItemClickListener(position -> {
+            Intent intent = new Intent(getContext(), MovieDetail.class);
+            intent.putExtra("movieId", myMovies.get(position).getMovieId());
+            startActivity(intent);
+        });
 
         return root;
     }
